@@ -1,0 +1,411 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Pr&aacute;ctica 06: Sistemas diferenciales</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-19"><meta name="DC.source" content="SySPrac06RodrigoVazquez.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Pr&aacute;ctica 06: Sistemas diferenciales</h1><!--introduction--><p>UNIDAD PROFESIONAL INTERDISCILIPINARIA EN INGENIER&Iacute;A Y TECNOLOG&Iacute;AS AVANZADAS</p><p>Grupo: 2TV2</p><p>Asignatura: Se&ntilde;ales y Sistemas</p><p>Integrantes:</p><p>Garcia Acosta Abraham</p><p>Vazquez Cruz Rodrigo</p><pre>Profesor:</pre><pre>Dr. Rafael Matinez Martinez</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Desarrollo</a></li><li><a href="#2">Ejercicio 1: Muestra la funci&oacute;n de transferencia del sistema</a></li><li><a href="#3">Ejercicio 2: Muestra la respuesta al impulso (simb&oacute;lico, gr&aacute;fica)</a></li><li><a href="#4">Ejercicio 3: Muestra la respuesta a entrada cero (simb&oacute;lico, gr&aacute;fica)</a></li><li><a href="#5">Ejercicio 4: Muestra la respuesta a estado cero (simb&oacute;lico, gr&aacute;fica)</a></li><li><a href="#6">Ejercicio 5: Muestra la respuesta total (simb&oacute;lico, gr&aacute;fica)</a></li><li><a href="#7">Ejercicio 6: La respuesta total al escal&oacute;n con condiciones iniciales 0 (simb&oacute;lico, gr&aacute;fica)</a></li><li><a href="#8">Ejercicio 7: Usando subplot, depliega una figura con 5 gr&aacute;ficas</a></li><li><a href="#9">Ap&eacute;ndice</a></li></ul></div><h2 id="1">Desarrollo</h2><p>Para sistemas diferenciales realiza un programa con las siguientes caracter&iacute;sticas</p><div><ol><li>Muestra la funci&oacute;n de transferencia del sistema</li><li>Muestra la respuesta al impulso (simb&oacute;lico, gr&aacute;fica)</li><li>Muestra la respuesta a entrada cero (simb&oacute;lico, gr&aacute;fica)</li><li>Muestra la respuesta a estado cero (simb&oacute;lico, gr&aacute;fica)</li><li>Muestra la respuesta total (simb&oacute;lico, gr&aacute;fica)</li><li>La respuesta total al escal&oacute;n con condiciones iniciales 0 (simb&oacute;lico, gr&aacute;fica)</li><li>Usando subplot, depliega una figura con 5 gr&aacute;ficas</li></ol></div><p>La practica se prueba con el siguiente problema:</p><p><img src="SySPrac06RodrigoVazquez_eq04448378101411606469.png" alt="$\ddot{y}+2\dot{y}(t)+3y(t)=\dot{x}(t)-x(t)$"></p><p>donde:</p><p><img src="SySPrac06RodrigoVazquez_eq18427140854807489973.png" alt="$x(t)=cos(2t)u(t),\;\;y(0^-)=1,\;\;\dot{y}(0^-)=1$"></p><h2 id="2">Ejercicio 1: Muestra la funci&oacute;n de transferencia del sistema</h2><pre class="codeinput">numerador = [1 -1];
+denominador = [1,2,3];
+sys = tf(numerador,denominador)
+</pre><pre class="codeoutput">
+sys =
+ 
+      s - 1
+  -------------
+  s^2 + 2 s + 3
+ 
+Continuous-time transfer function.
+
+</pre><h2 id="3">Ejercicio 2: Muestra la respuesta al impulso (simb&oacute;lico, gr&aacute;fica)</h2><p>El c&oacute;digo de este ejercicio lo puedes encontrar en el siguiente <a href="https://www.dropbox.com/s/eemtx3c14g9fi4d/Ejercicio2.m?dl=0">enlace</a></p><pre class="codeinput">syms <span class="string">t</span>
+Ejercicio2([3 2 1],[-1 1],5)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE
+ 
+                     2
+3 Y(s) + 2 s Y(s) + s  Y(s)
+
+=
+s - 1
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+    s - 1
+------------
+ 2
+s  + 2 s + 3
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+    s - 1
+------------
+ 2
+s  + 2 s + 3
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+exp(-t) (cos(sqrt(2) t) - sqrt(2) sin(sqrt(2) t))
+
+</pre><img vspace="5" hspace="5" src="SySPrac06RodrigoVazquez_01.png" alt=""> <h2 id="4">Ejercicio 3: Muestra la respuesta a entrada cero (simb&oacute;lico, gr&aacute;fica)</h2><p>El c&oacute;digo de este ejercicio lo puedes encontrar en el siguiente <a href="https://www.dropbox.com/s/ros5qge4rlpnsh2/Ejercicio3.m?dl=0">enlace</a></p><pre class="codeinput">syms <span class="string">t</span>
+Ejercicio3([3 2 1],[-1 1],[1 1],10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y subtituimos condiciones iniciales
+ 
+                         2
+3 Y(s) - s + 2 s Y(s) + s  Y(s) - 3
+
+=
+0
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+    s + 3
+------------
+ 2
+s  + 2 s + 3
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+    s + 3
+------------
+ 2
+s  + 2 s + 3
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+exp(-t) (cos(sqrt(2) t) + sqrt(2) sin(sqrt(2) t))
+
+</pre><img vspace="5" hspace="5" src="SySPrac06RodrigoVazquez_02.png" alt=""> <h2 id="5">Ejercicio 4: Muestra la respuesta a estado cero (simb&oacute;lico, gr&aacute;fica)</h2><p>El c&oacute;digo de este ejercicio lo puedes encontrar en el siguiente <a href="https://www.dropbox.com/s/ra457bq7j6endp1/Ejercicio4.m?dl=0">enlace</a></p><pre class="codeinput">syms <span class="string">t</span>
+Ejercicio4([3 2 1],[-1 1],cos(2*t).*heaviside(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y subtituimos condiciones iniciales
+ 
+                     2
+3 Y(s) + 2 s Y(s) + s  Y(s)
+
+=
+s X(s) - X(s)
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                     2
+3 Y(s) + 2 s Y(s) + s  Y(s)
+
+=
+   2
+  s         s
+------ - ------
+ 2        2
+s  + 4   s  + 4
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+         s (s - 1)
+---------------------------
+ 4      3      2
+s  + 2 s  + 7 s  + 8 s + 12
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+9 s    4     9 s    3
+--- - --     --- - --
+ 17   17      17   17
+-------- - ------------
+  2         2
+ s  + 4    s  + 2 s + 3
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+cos(2 t) 9   sin(2 t) 2
+---------- - ----------
+    17           17
+
+             /                  2 sqrt(2) sin(sqrt(2) t) \
+     exp(-t) | cos(sqrt(2) t) - ------------------------ | 9
+             \                              3            /
+   - -------------------------------------------------------
+                                17
+
+</pre><img vspace="5" hspace="5" src="SySPrac06RodrigoVazquez_03.png" alt=""> <h2 id="6">Ejercicio 5: Muestra la respuesta total (simb&oacute;lico, gr&aacute;fica)</h2><p>El c&oacute;digo de este ejercicio lo puedes encontrar en el siguiente <a href="https://www.dropbox.com/s/4g1p8lkgqsuiioe/Ejercicio5.m?dl=0">enlace</a></p><pre class="codeinput">syms <span class="string">t</span>
+Ejercicio5([3 2 1],[-1 1],[1 1],cos(2*t).*heaviside(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y subtituimos condiciones iniciales
+ 
+                         2
+3 Y(s) - s + 2 s Y(s) + s  Y(s) - 3
+
+=
+s X(s) - X(s)
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                         2
+3 Y(s) - s + 2 s Y(s) + s  Y(s) - 3
+
+=
+   2
+  s         s
+------ - ------
+ 2        2
+s  + 4   s  + 4
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+     3      2
+    s  + 4 s  + 3 s + 12
+---------------------------
+ 4      3      2
+s  + 2 s  + 7 s  + 8 s + 12
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+9 s    4     8 s   54
+--- - --     --- + --
+ 17   17      17   17
+-------- + ------------
+  2         2
+ s  + 4    s  + 2 s + 3
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+cos(2 t) 9   sin(2 t) 2
+---------- - ----------
+    17           17
+
+             /                  23 sqrt(2) sin(sqrt(2) t) \
+     exp(-t) | cos(sqrt(2) t) + ------------------------- | 8
+             \                              8             /
+   + --------------------------------------------------------
+                                17
+
+</pre><img vspace="5" hspace="5" src="SySPrac06RodrigoVazquez_04.png" alt=""> <h2 id="7">Ejercicio 6: La respuesta total al escal&oacute;n con condiciones iniciales 0 (simb&oacute;lico, gr&aacute;fica)</h2><p>El c&oacute;digo de este ejercicio lo puedes encontrar en el siguiente <a href="https://www.dropbox.com/s/e3vhim5x9oq0s19/Ejercicio6.m?dl=0">enlace</a></p><pre class="codeinput"> syms <span class="string">t</span>
+ Ejercicio6([3 2 1],[-1 1],[0 0],heaviside(t),10)
+</pre><pre class="codeoutput"> 
+APLICAMOS TRANSFORMADA DE LAPLACE y subtituimos condiciones iniciales
+ 
+                     2
+3 Y(s) + 2 s Y(s) + s  Y(s)
+
+=
+s X(s) - X(s)
+
+ 
+SUBSTITUIMOS LA TRANSFORMADA DE LA ENTRADA
+ 
+                     2
+3 Y(s) + 2 s Y(s) + s  Y(s)
+
+=
+    1
+1 - -
+    s
+
+ 
+DESPEJAMOS Y(s)
+ 
+Y(s)=
+      s - 1
+----------------
+    2
+s (s  + 2 s + 3)
+
+ 
+DESARROLLAMOS LAS FRACCIONES PARCIALES DE Y(s)
+ 
+Y(s)=
+    s   5
+    - + -
+    3   3       1
+------------ - ---
+ 2             3 s
+s  + 2 s + 3
+
+ 
+Aplicamos transformada inversa, asi la soluci&oacute;n es
+ 
+y(t)=
+exp(-t) (cos(sqrt(2) t) + 2 sqrt(2) sin(sqrt(2) t))   1
+--------------------------------------------------- - -
+                         3                            3
+
+</pre><img vspace="5" hspace="5" src="SySPrac06RodrigoVazquez_05.png" alt=""> <h2 id="8">Ejercicio 7: Usando subplot, depliega una figura con 5 gr&aacute;ficas</h2><p>El c&oacute;digo de este ejercicio lo puedes encontrar en el siguiente <a href="https://www.dropbox.com/s/gg6jncbk82k1joq/Ejercicio7.m?dl=0">enlace</a></p><pre class="codeinput"> syms <span class="string">t</span>
+ Ejercicio7([3 2 1],[-1 1],[1 1],cos(2*t)*heaviside(t),10)
+</pre><img vspace="5" hspace="5" src="SySPrac06RodrigoVazquez_06.png" alt=""> <h2 id="9">Ap&eacute;ndice</h2><p>El c&oacute;digo de esta publicaci&oacute;n lo puedes encontrar en el siguiente <a href="https://drive.google.com/open?id=1nYrDFQ8SaR7RHyC1vEbD4QzhdCJi7WE0">drive</a></p><p><a href="https://drive.matlab.com/sharing/ed3e054d-1d44-41a7-8105-557094357add">MATLAB Online</a></p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Práctica 06: Sistemas diferenciales
+%
+% UNIDAD PROFESIONAL INTERDISCILIPINARIA EN INGENIERÍA Y TECNOLOGÍAS
+% AVANZADAS
+%
+% Grupo: 2TV2  
+%
+% Asignatura: Señales y Sistemas 
+%
+% Integrantes:                                
+% 
+% Garcia Acosta Abraham
+%
+% Vazquez Cruz Rodrigo
+% 
+%  Profesor:
+%
+%  Dr. Rafael Matinez Martinez
+%% Desarrollo
+% Para sistemas diferenciales realiza un programa con las siguientes
+% características
+% 
+% # Muestra la función de transferencia del sistema
+% # Muestra la respuesta al impulso (simbólico, gráfica)
+% # Muestra la respuesta a entrada cero (simbólico, gráfica)
+% # Muestra la respuesta a estado cero (simbólico, gráfica)
+% # Muestra la respuesta total (simbólico, gráfica)
+% # La respuesta total al escalón con condiciones iniciales 0 (simbólico, gráfica) 
+% # Usando subplot, depliega una figura con 5 gráficas
+%
+% La practica se prueba con el siguiente problema:
+% 
+% $\ddot{y}+2\dot{y}(t)+3y(t)=\dot{x}(t)-x(t)$ 
+%
+% donde: 
+% 
+% $x(t)=cos(2t)u(t),\;\;y(0^-)=1,\;\;\dot{y}(0^-)=1$
+% 
+
+%% Ejercicio 1: Muestra la función de transferencia del sistema
+%
+numerador = [1 -1];
+denominador = [1,2,3];
+sys = tf(numerador,denominador)
+%% Ejercicio 2: Muestra la respuesta al impulso (simbólico, gráfica)
+%
+% El código de este ejercicio lo puedes encontrar en el siguiente 
+% <https://www.dropbox.com/s/eemtx3c14g9fi4d/Ejercicio2.m?dl=0 enlace>
+
+syms t
+Ejercicio2([3 2 1],[-1 1],5)
+%% Ejercicio 3: Muestra la respuesta a entrada cero (simbólico, gráfica)
+%
+% El código de este ejercicio lo puedes encontrar en el siguiente 
+% <https://www.dropbox.com/s/ros5qge4rlpnsh2/Ejercicio3.m?dl=0 enlace>
+syms t
+Ejercicio3([3 2 1],[-1 1],[1 1],10)
+%% Ejercicio 4: Muestra la respuesta a estado cero (simbólico, gráfica)
+%
+% El código de este ejercicio lo puedes encontrar en el siguiente 
+% <https://www.dropbox.com/s/ra457bq7j6endp1/Ejercicio4.m?dl=0 enlace>
+syms t
+Ejercicio4([3 2 1],[-1 1],cos(2*t).*heaviside(t),10)
+
+%% Ejercicio 5: Muestra la respuesta total (simbólico, gráfica)
+% 
+% El código de este ejercicio lo puedes encontrar en el siguiente 
+% <https://www.dropbox.com/s/4g1p8lkgqsuiioe/Ejercicio5.m?dl=0 enlace>
+syms t
+Ejercicio5([3 2 1],[-1 1],[1 1],cos(2*t).*heaviside(t),10)
+%% Ejercicio 6: La respuesta total al escalón con condiciones iniciales 0 (simbólico, gráfica)
+% 
+% El código de este ejercicio lo puedes encontrar en el siguiente 
+% <https://www.dropbox.com/s/e3vhim5x9oq0s19/Ejercicio6.m?dl=0 enlace>
+ syms t
+ Ejercicio6([3 2 1],[-1 1],[0 0],heaviside(t),10)
+ %% Ejercicio 7: Usando subplot, depliega una figura con 5 gráficas
+ %
+ % El código de este ejercicio lo puedes encontrar en el siguiente 
+% <https://www.dropbox.com/s/gg6jncbk82k1joq/Ejercicio7.m?dl=0 enlace>
+ syms t
+ Ejercicio7([3 2 1],[-1 1],[1 1],cos(2*t)*heaviside(t),10)
+ %% Apéndice
+ % El código de esta publicación lo puedes encontrar en el siguiente 
+% <https://drive.google.com/open?id=1nYrDFQ8SaR7RHyC1vEbD4QzhdCJi7WE0 drive>
+% 
+% <https://drive.matlab.com/sharing/ed3e054d-1d44-41a7-8105-557094357add MATLAB Online>
+##### SOURCE END #####
+--></body></html>
